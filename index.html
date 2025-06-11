@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ReportRadar delivers the latest news on World, Tech, and more.">
+  <meta name="keywords" content="news, world, technology, breaking news">
+  <meta name="author" content="Rex J. Kapoloma">
+  <title>ReportRadar - Home</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/larger.css" media="(min-width: 769px)">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="menu-toggle">
+      <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">☰</button>
+      <button class="search-toggle" aria-label="Toggle search" aria-expanded="false">🔍</button>
+    </div>
+    <div class="logo">
+      <span class="logo-box">ReportRadar</span>
+    </div>
+    <div class="weather">
+      <span class="weather-time">11:36 PM</span>
+      <span class="weather-temp">20°C</span>
+      <span class="weather-icon">🌙</span>
+    </div>
+    <div class="sidebar">
+      <button class="close-btn" aria-label="Close menu">✖</button>
+      <nav class="dropdown-menu" aria-label="Primary navigation">
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="world.html">World News</a>
+        <a href="tech.html">Tech</a>
+        <a href="breaking-news.html">Breaking News</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="admin.html">Admin Panel</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section id="featured-articles" aria-labelledby="featured-articles-heading">
+      <h1 id="featured-articles-heading">Featured Articles</h1>
+      <div id="articles" class="articles-container"></div>
+    </section>
+    <section id="newsletter" aria-labelledby="newsletter-heading">
+      <h2 id="newsletter-heading">Subscribe to Our Newsletter</h2>
+      <form id="newsletter-form">
+        <label for="email-sub">Email:</label>
+        <input type="email" id="email-sub" required aria-required="true">
+        <button type="submit">Subscribe</button>
+      </form>
+      <div id="newsletter-message" aria-live="polite"></div>
+    </section>
+    <section id="search-results" aria-live="polite"></section>
+  </main>
+  <footer>
+    <p>© 2025 ReportRadar</p>
+    <a href="references.html">References</a>
+  </footer>
+  <script src="js/script.js"></script>
+</body>
+</html>

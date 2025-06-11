@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ReportRadar Admin Panel">
+  <meta name="author" content="Rex J. Kapoloma">
+  <title>ReportRadar - Admin Panel</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/larger.css" media="(min-width: 769px)">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="menu-toggle">
+      <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">☰</button>
+      <button class="search-toggle" aria-label="Toggle search" aria-expanded="false">🔍</button>
+    </div>
+    <div class="logo">
+      <span class="logo-box">ReportRadar Admin</span>
+    </div>
+    <div class="weather">
+      <span class="weather-time">11:36 PM</span>
+      <span class="weather-temp">20°C</span>
+      <span class="weather-icon">🌙</span>
+    </div>
+    <div class="sidebar">
+      <button class="close-btn" aria-label="Close menu">✖</button>
+      <nav class="dropdown-menu" aria-label="Primary navigation">
+        <a href="index.html">Home</a>
+        <a href="world.html">World News</a>
+        <a href="tech.html">Tech</a>
+        <a href="breaking-news.html">Breaking News</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="admin.html" aria-current="page">Admin Panel</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section id="admin-panel">
+      <h1>Admin Panel</h1>
+      <div id="auth-section" class="hidden">
+        <form id="auth-form" class="form-group">
+          <label for="admin-role">Role:</label>
+          <input type="text" id="admin-role" required aria-required="true" placeholder="e.g., Editor-in-Chief">
+          <label for="admin-password">Password:</label>
+          <input type="password" id="admin-password" required aria-required="true">
+          <button type="submit">Login</button>
+        </form>
+        <div id="auth-message" aria-live="polite"></div>
+      </div>
+      <div id="admin-content" class="hidden">
+        <h2>Manage Articles</h2>
+        <div class="filter-section">
+          <label for="category-filter">Filter by Category:</label>
+          <select id="category-filter" aria-label="Filter articles by category">
+            <option value="all">All</option>
+            <option value="World">World</option>
+            <option value="Tech">Tech</option>
+            <option value="Breaking">Breaking</option>
+          </select>
+        </div>
+        <form id="article-form" class="form-group">
+          <label for="article-title">Title:</label>
+          <input type="text" id="article-title" required aria-required="true">
+          <label for="article-author">Author:</label>
+          <input type="text" id="article-author" required aria-required="true">
+          <label for="article-description">Description:</label>
+          <textarea id="article-description" required aria-required="true"></textarea>
+          <label for="article-image">Image URL:</label>
+          <input type="url" id="article-image" required aria-required="true">
+          <label for="article-url">Link:</label>
+          <input type="url" id="article-url" required aria-required="true">
+          <label for="article-category">Category:</label>
+          <select id="article-category" required aria-required="true">
+            <option value="World">World</option>
+            <option value="Tech">Tech</option>
+            <option value="Breaking">Breaking</option>
+          </select>
+          <button type="submit" id="add-article-btn">Add Article</button>
+          <button type="button" id="edit-article-btn" style="display: none;">Save Changes</button>
+        </form>
+        <div id="article-list"></div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p>© 2025 ReportRadar</p>
+    <a href="references.html">References</a>
+  </footer>
+  <script src="js/admin.js"></script>
+</body>
+</html>
