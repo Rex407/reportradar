@@ -7,56 +7,51 @@
   <meta name="keywords" content="news, world, technology, breaking news">
   <meta name="author" content="Rex J. Kapoloma">
   <title>ReportRadar - Home</title>
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/larger.css" media="(min-width: 769px)">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/webp" href="images/favicon.webp">
 </head>
 <body>
   <header>
     <div class="menu-toggle">
       <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">☰</button>
-      <button class="search-toggle" aria-label="Toggle search" aria-expanded="false">🔍</button>
     </div>
     <div class="logo">
       <span class="logo-box">ReportRadar</span>
     </div>
     <div class="weather">
-      <span class="weather-time">11:36 PM</span>
-      <span class="weather-temp">20°C</span>
+      <span class="weather-time">03:02 AM</span>
+      <span class="weather-temp">18°C</span>
       <span class="weather-icon">🌙</span>
     </div>
-    <div class="sidebar">
-      <button class="close-btn" aria-label="Close menu">✖</button>
-      <nav class="dropdown-menu" aria-label="Primary navigation">
-        <a href="index.html" aria-current="page">Home</a>
-        <a href="world.html">World News</a>
-        <a href="tech.html">Tech</a>
-        <a href="breaking-news.html">Breaking News</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-        <a href="admin.html">Admin Panel</a>
-      </nav>
-    </div>
+    <button class="mode-toggle" aria-label="Toggle dark/light mode">🌙</button>
+    <nav class="nav-menu" aria-label="Primary navigation">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="world.html">World</a>
+      <a href="tech.html">Tech</a>
+      <a href="about.html">About</a>
+      <a href="contact.html" aria-current="page">Contact</a>
+      <a href="dashboard.html" aria-current="page">Dashboard</a>
+      <a href="admin.html" aria-current="page">Login</a>
+    </nav>
   </header>
   <main>
-    <section id="featured-articles" aria-labelledby="featured-articles-heading">
-      <h1 id="featured-articles-heading">Featured Articles</h1>
-      <div id="articles" class="articles-container"></div>
+    <section id="featured-news" aria-labelledby="featured-news-heading">
+      <h1 id="featured-news-heading">Featured News</h1>
+      <div id="news-container" class="news-grid"></div>
     </section>
     <section id="newsletter" aria-labelledby="newsletter-heading">
       <h2 id="newsletter-heading">Subscribe to Our Newsletter</h2>
       <form id="newsletter-form">
         <label for="email-sub">Email:</label>
-        <input type="email" id="email-sub" required aria-required="true">
+        <input type="email" id="email-sub" required aria-required="true" placeholder="Enter your email">
         <button type="submit">Subscribe</button>
       </form>
       <div id="newsletter-message" aria-live="polite"></div>
     </section>
-    <section id="search-results" aria-live="polite"></section>
   </main>
   <footer>
     <p>© 2025 ReportRadar</p>
-    <a href="references.html">References</a>
+    <a href="https://github.com/yourusername/reportradar" target="_blank">GitHub</a>
   </footer>
   <script src="js/script.js"></script>
 </body>

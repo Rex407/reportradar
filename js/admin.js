@@ -1,110 +1,67 @@
-// Load from localStorage
-let personalStories = JSON.parse(localStorage.getItem('personalStories')) || [];
-const AUTH_PASSWORDS = {
-  'Editor-in-Chief': 'radar@6060',
-  'Tech Reporter': 'tech@6060'
-};
-let currentRole = localStorage.getItem('currentRole') || null;
-let editingIndex = null;
+// Load news from localStorage
+let newsArticles = JSON.parse(localStorage.getItem('newsArticles')) || [];
 
-// Render article list with category filtering
-function renderArticleList(filter = 'all') {
-  const articleList = document.getElementById('article-list');
-  if (articleList) {
-    const filteredStories = filter === 'all' ? personalStories : personalStories.filter(story => story.category === filter);
-    articleList.innerHTML = filteredStories.length ? filteredStories.map((story, index) => `
-      <div class="article-item ${story.category.toLowerCase()}">
-        <h3>${story.title}</h3>
-        <p>By ${story.author} | <span class="category-label">${story.category}</span></p>
-        <button onclick="editArticle(${index})">Edit</button>
-        <button onclick="deleteArticle(${index})">Delete</button>
+// Render news list
+function renderNewsList() {
+  const newsList = document.getElementById('news-list');
+  if (newsList) {
+    newsList.innerHTML = newsArticles.map(article => `
+      <div class="news-card">
+        <h3>${article.title}</h3>
+        <p><small>Category: ${article.category}</small></p>
+        <p>${article.description.substring(0, 50)}...</p>
+        <button onclick="editNews(${newsArticles.indexOf(article)})">Edit</button>
+        <button onclick="deleteNews(${newsArticles.indexOf(article)})">Delete</button>
       </div>
-    `).join('') : '<p>No articles in this category.</p>';
+    `).join('');
   }
 }
 
-// Handle authentication
-function handleAuth(event) {
-  event.preventDefault();
-  const role = document.getElementById('admin-role').value;
-  const password = document.getElementById('admin-password').value;
+// Handle news form submission
+document.getElementById('news-form')?.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const title = document.getElementById('news-title').value;
+  const category = document.getElementById('news-category').value;
+  const description = document.getElementById('news-description').value;
+  const image = document.getElementById('news-image').value;
 
-  if (AUTH_PASSWORDS[role] && AUTH_PASSWORDS[role] === password) {
-    currentRole = role;
-    localStorage.setItem('currentRole', currentRole);
-    document.getElementById('auth-section').classList.add('hidden');
-    document.getElementById('admin-content').classList.remove('hidden');
-    renderArticleList();
-  } else {
-    document.getElementById('auth-message').innerHTML = 'Invalid role or password.';
-  }
-}
-
-// Handle adding or editing an article
-function handleArticleForm(event) {
-  event.preventDefault();
-  const title = document.getElementById('article-title').value;
-  const author = document.getElementById('article-author').value;
-  const description = document.getElementById('article-description').value;
-  const image = document.getElementById('article-image').value;
-  const url = document.getElementById('article-url').value;
-  const category = document.getElementById('article-category').value;
-
-  if (title && author && description && image && url) {
-    const article = { title, author, description, urlToImage: image, url, category, publishedAt: new Date().toISOString() };
-    if (editingIndex !== null) {
-      personalStories[editingIndex] = article;
-      document.getElementById('edit-article-btn').style.display = 'none';
-      document.getElementById('add-article-btn').style.display = 'block';
-      editingIndex = null;
-    } else {
-      personalStories.push(article);
-    }
-    localStorage.setItem('personalStories', JSON.stringify(personalStories));
-    event.target.reset();
-    renderArticleList(document.getElementById('category-filter').value);
+  if (title && category && description && image) {
+    const newArticle = { id: Date.now(), title, category, description, image, date: new Date().toISOString() };
+    newsArticles.push(newArticle);
+    localStorage.setItem('newsArticles', JSON.stringify(newArticles));
+    document.getElementById('news-form').reset();
+    renderNewsList();
   } else {
     alert('Please fill all fields.');
   }
-}
+});
 
-// Edit article
-window.editArticle = function(index) {
-  const story = personalStories[index];
-  document.getElementById('article-title').value = story.title;
-  document.getElementById('article-author').value = story.author;
-  document.getElementById('article-description').value = story.description;
-  document.getElementById('article-image').value = story.urlToImage;
-  document.getElementById('article-url').value = story.url;
-  document.getElementById('article-category').value = story.category;
-  editingIndex = index;
-  document.getElementById('add-article-btn').style.display = 'none';
-  document.getElementById('edit-article-btn').style.display = 'block';
+// Edit news (simplified, add form population logic as needed)
+window.editNews = (index) => {
+  const article = newsArticles[index];
+  document.getElementById('news-title').value = article.title;
+  document.getElementById('news-category').value = article.category;
+  document.getElementById('news-description').value = article.description;
+  document.getElementById('news-image').value = article.image;
+
+  newsArticles.splice(index, 1);
+  localStorage.setItem('newsArticles', JSON.stringify(newsArticles));
+  renderNewsList();
 };
 
-// Delete article
-window.deleteArticle = function(index) {
-  if (confirm('Are you sure you want to delete this article?')) {
-    personalStories.splice(index, 1);
-    localStorage.setItem('personalStories', JSON.stringify(personalStories));
-    renderArticleList(document.getElementById('category-filter').value);
+// Delete news
+window.deleteNews = (index) => {
+  if (confirm('Are you sure you want to delete this news?')) {
+    newsArticles.splice(index, 1);
+    localStorage.setItem('newsArticles', JSON.stringify(newsArticles));
+    renderNewsList();
   }
 };
 
-// Handle category filter change
-function handleFilterChange() {
-  const filter = document.getElementById('category-filter').value;
-  renderArticleList(filter);
-}
-
-// Event listeners
+// Load news on dashboard
 document.addEventListener('DOMContentLoaded', () => {
-  if (currentRole) {
-    document.getElementById('auth-section').classList.add('hidden');
-    document.getElementById('admin-content').classList.remove('hidden');
-    renderArticleList();
+  if (window.location.pathname.includes('dashboard.html')) {
+    renderNewsList();
+    renderComments(); // From comments.js
   }
-  document.getElementById('auth-form')?.addEventListener('submit', handleAuth);
-  document.getElementById('article-form')?.addEventListener('submit', handleArticleForm);
-  document.getElementById('category-filter')?.addEventListener('change', handleFilterChange);
 });

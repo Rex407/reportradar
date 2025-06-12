@@ -17,25 +17,25 @@
   border: 0;
 }
 
-/* Global Styles (Repetition: Consistent fonts and colors) */
+/* Global Styles */
 body {
   font-family: 'Roboto', Arial, sans-serif;
   line-height: 1.6;
-  color: #d3d3d3; /* Light Gray for text */
-  background: linear-gradient(to bottom, #1a1a1a, #000000); /* Dark gradient background */
-  overflow-x: hidden; /* Prevent sidebar overflow */
+  color: #d3d3d3;
+  background: linear-gradient(to bottom, #1a1a1a, #000000);
+  overflow-x: hidden;
 }
 
-/* Container (Alignment: Centered content) */
+/* Container */
 .container {
   max-width: 100%;
   margin: 0 auto;
   padding: 10px;
 }
 
-/* Header (Proximity: Group menu toggle, logo, and weather) */
+/* Header */
 header {
-  background: #1a1a1a; /* Dark Gray */
+  background: #1a1a1a;
   padding: 5px 10px;
   position: sticky;
   top: 0;
@@ -55,7 +55,7 @@ header {
   background: none;
   border: none;
   font-size: 1.5rem;
-  color: #d3d3d3; /* Light Gray */
+  color: #d3d3d3;
   cursor: pointer;
   padding: 5px;
   margin-right: 5px;
@@ -65,26 +65,26 @@ header {
   position: absolute;
   top: 10px;
   right: 10px;
-  display: none; /* Hidden until sidebar is active */
+  display: none;
 }
 
 .logo .logo-box {
-  background: #dc3545; /* Red */
-  color: #ffffff; /* White */
+  background: #dc3545;
+  color: #ffffff;
   font-weight: 700;
   padding: 2px 8px;
   font-size: 1.2rem;
   text-transform: uppercase;
   letter-spacing: 1px;
-  border-radius: 4px; /* Rounded corners */
+  border-radius: 4px;
 }
 
 .weather {
   display: flex;
   align-items: center;
-  background: #2a2a2a; /* Darker Gray */
+  background: #2a2a2a;
   padding: 2px 8px;
-  border-radius: 4px; /* Rounded corners */
+  border-radius: 4px;
 }
 
 .weather-time {
@@ -101,43 +101,44 @@ header {
 
 .weather-icon {
   font-size: 1rem;
-  color: #ffff00; /* Yellow for sun placeholder */
+  color: #ffff00;
 }
 
-/* Sidebar (Hidden by default, shown on toggle click) */
+/* Sidebar */
 .sidebar {
   position: fixed;
   top: 0;
-  left: -250px; /* Hidden off-screen */
+  left: -250px;
   width: 250px;
   height: 100%;
-  background: #1a1a1a; /* Dark Gray */
+  background: #1a1a1a;
   padding: 20px;
   transition: left 0.3s ease;
   z-index: 200;
-  border-radius: 0 0 10px 0; /* Rounded corners on right side */
+  border-radius: 0 0 10px 0;
 }
 
 .sidebar.active {
-  left: 0; /* Slides in when active */
+  left: 0;
 }
 
 .close-btn.active {
-  display: block; /* Show close button when sidebar is active */
+  display: block;
 }
 
 .search-container {
   margin-bottom: 20px;
+  display: none; /* Hidden by default */
 }
 
 #search-bar {
   width: 100%;
   padding: 8px;
-  border: 1px solid #333333; /* Darker Gray */
-  border-radius: 8px; /* Increased rounded corners */
+  border: 1px solid #333333;
+  border-radius: 8px;
   font-size: 1rem;
-  background: #1a1a1a; /* Dark Gray */
-  color: #d3d3d3; /* Light Gray */
+  background: #1a1a1a;
+  color: #d3d3d3;
 }
 
 .dropdown-menu {
@@ -147,85 +148,84 @@ header {
 
 .dropdown-menu a {
   text-decoration: none;
-  color: #007bff; /* Blue */
+  color: #007bff;
   font-weight: 500;
   padding: 10px 0;
   transition: color 0.2s;
-  border-radius: 4px; /* Rounded corners */
+  border-radius: 4px;
 }
 
 .dropdown-menu a:hover,
 .dropdown-menu a:focus {
-  color: #0056b3; /* Dark Blue */
+  color: #0056b3;
 }
 
 .dropdown-menu a[aria-current="page"] {
-  color: #dc3545; /* Red */
+  color: #dc3545;
 }
 
-/* Featured Articles (Rounded corners, centered, hover effect) */
-#featured-articles {
+/* Articles */
+#featured-articles, #world-articles, #tech-articles, #breaking-news {
   border-radius: 10px;
   overflow: hidden;
   margin: 0 auto;
-  max-width: 1200px; /* Matches container max-width in larger.css */
+  max-width: 1200px;
   text-align: center;
 }
 
 .articles-container {
-  padding: 15px;
+  padding: 20px; /* Increased padding for grow effect */
 }
 
 .article-card {
-  border: 1px solid #333333; /* Darker Gray */
-  border-radius: 10px; /* Increased rounded corners */
-  padding: 15px;
+  border: 1px solid #333333;
+  border-radius: 10px;
+  padding: 20px; /* Increased padding for grow effect */
   margin-bottom: 15px;
-  background: #1a1a1a; /* Dark Gray */
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
-  display: inline-block; /* Allows centering with text-align */
+  background: #1a1a1a;
+  transition: box-shadow 0.3s ease;
+  display: inline-block;
   vertical-align: top;
 }
 
-.article-card:hover {
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6); /* Increased shadow size */
-  transform: scale(1.1); /* Increased zoom on hover */
+/* Tech News - No Hovering */
+#tech-articles .article-card:hover {
+  box-shadow: none; /* Remove hover effect */
+  transform: none; /* Remove scale */
 }
 
-.article-card img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px; /* Rounded corners */
-  margin-bottom: 10px;
+/* World News - Centered */
+#world-articles .articles-container {
+  text-align: center; /* Center content */
 }
 
-/* Main Content (Proximity: Group related sections) */
+/* Main Content */
 section {
   margin: 20px 0;
 }
 
 h1 {
-  color: #dc3545; /* Red */
+  color: #dc3545;
   margin-bottom: 15px;
-  border-radius: 4px; /* Rounded corners */
+  border-radius: 4px;
   padding: 5px;
 }
 
 h2 {
-  color: #ffffff; /* White */
+  color: #ffffff;
   margin-bottom: 10px;
-  border-radius: 4px; /* Rounded corners */
+  border-radius: 4px;
   padding: 5px;
 }
 
 .article-card p {
   margin-bottom: 10px;
-  color: #d3d3d3; /* Light Gray */
+  color: #d3d3d3;
 }
 
 .author {
   font-style: italic;
-  color: #6c757d; /* Gray */
+  color: #6c757d;
 }
 
 .share-buttons {
@@ -235,19 +235,19 @@ h2 {
 }
 
 .share-buttons a {
-  color: #007bff; /* Blue */
+  color: #007bff;
   text-decoration: none;
   font-size: 0.9rem;
-  padding: 5px 10px; /* Added padding */
-  border-radius: 8px; /* Rounded corners */
+  padding: 5px 10px;
+  border-radius: 8px;
 }
 
 .share-buttons a:hover {
-  color: #0056b3; /* Dark Blue */
-  background: rgba(0, 123, 255, 0.2); /* Light blue background on hover */
+  color: #0056b3;
+  background: rgba(0, 123, 255, 0.2);
 }
 
-/* Forms (Contrast: Clear input fields and buttons) */
+/* Forms */
 form {
   display: flex;
   flex-direction: column;
@@ -262,16 +262,16 @@ form {
 
 label {
   font-weight: 500;
-  color: #ffffff; /* White */
+  color: #ffffff;
 }
 
 input, textarea, select {
-  padding: 12px; /* Increased padding */
-  border: 1px solid #333333; /* Darker Gray */
-  border-radius: 10px; /* Increased rounded corners */
+  padding: 12px;
+  border: 1px solid #333333;
+  border-radius: 10px;
   font-size: 1rem;
-  background: #1a1a1a; /* Dark Gray */
-  color: #d3d3d3; /* Light Gray */
+  background: #1a1a1a;
+  color: #d3d3d3;
 }
 
 select {
@@ -283,15 +283,15 @@ select {
 
 textarea {
   resize: vertical;
-  min-height: 120px; /* Increased height */
+  min-height: 120px;
 }
 
 button {
-  background: #007bff; /* Blue */
-  color: #ffffff; /* White */
+  background: #007bff;
+  color: #ffffff;
   border: none;
-  padding: 12px; /* Increased padding */
-  border-radius: 10px; /* Increased rounded corners */
+  padding: 12px;
+  border-radius: 10px;
   cursor: pointer;
   font-size: 1rem;
   transition: background 0.2s;
@@ -299,103 +299,7 @@ button {
 
 button:hover,
 button:focus {
-  background: #0056b3; /* Dark Blue */
-}
-
-/* Edge Stories */
-#edge-stories {
-  border-radius: 10px;
-  overflow: hidden;
-  margin: 0 auto;
-  max-width: 1200px;
-  text-align: center;
-}
-
-#edge-stories-container {
-  padding: 15px;
-}
-
-#edge-stories-container .article-card {
-  border: 1px solid #333333;
-  border-radius: 10px; /* Increased rounded corners */
-  padding: 15px;
-  margin-bottom: 15px;
-  background: #1a1a1a;
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
-  display: inline-block;
-  vertical-align: top;
-}
-
-#edge-stories-container .article-card:hover {
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6); /* Increased shadow size */
-  transform: scale(1.1); /* Increased zoom on hover */
-}
-
-#edge-stories-container .article-card img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px; /* Rounded corners */
-  margin-bottom: 10px;
-}
-
-#edge-stories-container .article-card a {
-  color: #007bff;
-  text-decoration: none;
-  padding: 5px 10px; /* Added padding */
-  border-radius: 8px; /* Rounded corners */
-}
-
-#edge-stories-container .article-card a:hover {
-  color: #0056b3;
-  background: rgba(0, 123, 255, 0.2); /* Light blue background on hover */
-}
-
-.story-actions {
-  margin-top: 10px;
-}
-
-.story-actions button {
-  background: #dc3545;
-  color: #ffffff;
-  border: none;
-  padding: 8px 12px; /* Increased padding */
-  border-radius: 10px; /* Increased rounded corners */
-  cursor: pointer;
-  margin-right: 5px;
-}
-
-.story-actions button:hover {
-  background: #c82333;
-}
-
-/* Add Story Button and Section */
-.button-container {
-  text-align: center;
-  margin: 20px 0;
-}
-
-#add-story-button {
-  background: #007bff;
-  color: #ffffff;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background 0.2s;
-}
-
-#add-story-button:hover {
   background: #0056b3;
-}
-
-#add-story-section {
-  margin: 20px auto;
-  max-width: 500px;
-}
-
-#add-story-section.hidden {
-  display: none;
 }
 
 /* Admin Panel */
@@ -460,17 +364,17 @@ button:focus {
 }
 
 .article-item.world .category-label {
-  background-color: #007bff; /* Blue for World */
+  background-color: #007bff;
   color: #ffffff;
 }
 
 .article-item.tech .category-label {
-  background-color: #28a745; /* Green for Tech */
+  background-color: #28a745;
   color: #ffffff;
 }
 
 .article-item.breaking .category-label {
-  background-color: #dc3545; /* Red for Breaking */
+  background-color: #dc3545;
   color: #ffffff;
 }
 
@@ -488,148 +392,64 @@ button:focus {
   background: #0056b3;
 }
 
-/* Footer (Repetition: Consistent with header styling) */
+/* Footer */
 footer {
-  background: #1a1a1a; /* Dark Gray */
-  text-align: center;
+  background: #1a1a1a;
   padding: 15px;
   margin-top: 20px;
-  border-top: 1px solid #333333; /* Darker Gray */
-  border-radius: 0 0 10px 10px; /* Rounded corners at bottom */
+  border-top: 1px solid #333333;
+  border-radius: 0 0 10px 10px;
+  display: flex;
+  justify-content: flex-start; /* Align ReportRadar to left */
+}
+
+footer p {
+  margin: 0;
+  color: #d3d3d3;
 }
 
 footer a {
-  color: #007bff; /* Blue */
+  color: #007bff;
   text-decoration: none;
-  padding: 5px 10px; /* Added padding */
-  border-radius: 8px; /* Rounded corners */
+  padding: 5px 10px;
+  border-radius: 8px;
+  margin-left: 20px; /* Space between ReportRadar and links */
 }
 
 footer a:hover {
-  color: #0056b3; /* Dark Blue */
-  background: rgba(0, 123, 255, 0.2); /* Light blue background on hover */
+  color: #0056b3;
+  background: rgba(0, 123, 255, 0.2);
 }
 
-/* Mobile Portrait (< 480px) */
+/* Media Queries */
 @media (max-width: 480px) {
-  .container {
-    padding: 10px;
-  }
-
-  header {
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .logo .logo-box {
-    font-size: 1rem;
-  }
-
-  .weather {
-    flex-direction: column;
-    align-items: center;
-    padding: 5px;
-  }
-
-  .weather-time, .weather-temp {
-    font-size: 0.8rem;
-  }
-
-  .sidebar {
-    width: 200px;
-  }
-
-  #featured-articles {
-    max-width: 100%;
-  }
-
-  .articles-container {
-    padding: 10px;
-  }
-
-  .article-card {
-    width: 100%;
-  }
-
-  .article-card img {
-    max-height: 150px; /* Constrain image height on small screens */
-  }
-
-  h1 {
-    font-size: 1.5rem;
-  }
-
-  h2 {
-    font-size: 1.2rem;
-  }
-
-  .article-card p {
-    font-size: 0.9rem;
-  }
-
-  button, select, input {
-    font-size: 0.9rem;
-  }
-
-  #add-story-button {
-    padding: 10px 15px;
-    font-size: 0.9rem;
-  }
+  .container { padding: 10px; }
+  header { flex-direction: column; align-items: center; gap: 10px; }
+  .logo .logo-box { font-size: 1rem; }
+  .weather { flex-direction: column; align-items: center; padding: 5px; }
+  .weather-time, .weather-temp { font-size: 0.8rem; }
+  .sidebar { width: 200px; }
+  #featured-articles, #world-articles, #tech-articles, #breaking-news { max-width: 100%; }
+  .articles-container { padding: 10px; }
+  .article-card { width: 100%; }
+  .article-card img { max-height: 150px; }
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.2rem; }
+  .article-card p { font-size: 0.9rem; }
+  button, select, input { font-size: 0.9rem; }
 }
 
-/* Mobile Landscape (480px - 768px) */
 @media (min-width: 481px) and (max-width: 768px) {
-  .container {
-    padding: 15px;
-  }
-
-  header {
-    flex-direction: row;
-    justify-content: space-between;
-  }
-
-  .logo .logo-box {
-    font-size: 1.1rem;
-  }
-
-  .weather {
-    padding: 5px 10px;
-  }
-
-  .weather-time, .weather-temp {
-    font-size: 0.85rem;
-  }
-
-  .sidebar {
-    width: 220px;
-  }
-
-  #featured-articles {
-    max-width: 100%;
-  }
-
-  .articles-container {
-    padding: 12px;
-  }
-
-  .article-card {
-    width: 100%;
-  }
-
-  .article-card img {
-    max-height: 200px; /* Constrain image height on medium screens */
-  }
-
-  h1 {
-    font-size: 1.8rem;
-  }
-
-  h2 {
-    font-size: 1.4rem;
-  }
-
-  #add-story-button {
-    padding: 10px 18px;
-  }
+  .container { padding: 15px; }
+  header { flex-direction: row; justify-content: space-between; }
+  .logo .logo-box { font-size: 1.1rem; }
+  .weather { padding: 5px 10px; }
+  .weather-time, .weather-temp { font-size: 0.85rem; }
+  .sidebar { width: 220px; }
+  #featured-articles, #world-articles, #tech-articles, #breaking-news { max-width: 100%; }
+  .articles-container { padding: 12px; }
+  .article-card { width: 100%; }
+  .article-card img { max-height: 200px; }
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.4rem; }
 }

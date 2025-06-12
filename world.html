@@ -6,47 +6,40 @@
   <meta name="description" content="ReportRadar - World News">
   <meta name="keywords" content="world news, global events">
   <meta name="author" content="Rex J. Kapoloma">
-  <title>ReportRadar - World News</title>
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/larger.css" media="(min-width: 769px)">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <title>ReportRadar - World</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/webp" href="images/favicon.webp">
 </head>
 <body>
   <header>
     <div class="menu-toggle">
       <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">☰</button>
-      <button class="search-toggle" aria-label="Toggle search" aria-expanded="false">🔍</button>
     </div>
     <div class="logo">
       <span class="logo-box">ReportRadar</span>
     </div>
     <div class="weather">
-      <span class="weather-time">11:36 PM</span>
-      <span class="weather-temp">20°C</span>
+      <span class="weather-time">03:02 AM</span>
+      <span class="weather-temp">18°C</span>
       <span class="weather-icon">🌙</span>
     </div>
-    <div class="sidebar">
-      <button class="close-btn" aria-label="Close menu">✖</button>
-      <nav class="dropdown-menu" aria-label="Primary navigation">
-        <a href="index.html">Home</a>
-        <a href="world.html" aria-current="page">World News</a>
-        <a href="tech.html">Tech</a>
-        <a href="breaking-news.html">Breaking News</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-        <a href="admin.html">Admin Panel</a>
-      </nav>
-    </div>
+    <button class="mode-toggle" aria-label="Toggle dark/light mode">🌙</button>
+    <nav class="nav-menu" aria-label="Primary navigation">
+      <a href="index.html">Home</a>
+      <a href="world.html" aria-current="page">World</a>
+      <a href="tech.html">Tech</a>
+      <a href="about.html">About</a>
+    </nav>
   </header>
   <main>
-    <section id="world-articles" aria-labelledby="world-articles-heading">
-      <h1 id="world-articles-heading">World News</h1>
-      <div id="articles" class="articles-container"></div>
+    <section id="world-news" aria-labelledby="world-news-heading">
+      <h1 id="world-news-heading">World News</h1>
+      <div id="news-container" class="news-grid"></div>
     </section>
   </main>
   <footer>
     <p>© 2025 ReportRadar</p>
-    <a href="references.html">References</a>
+    <a href="https://github.com/yourusername/reportradar" target="_blank">GitHub</a>
   </footer>
   <script src="js/script.js"></script>
 </body>

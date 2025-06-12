@@ -3,50 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="About ReportRadar and our mission.">
-  <meta name="keywords" content="about, ReportRadar, news mission">
+  <meta name="description" content="About ReportRadar">
+  <meta name="keywords" content="about, news, reportradar">
   <meta name="author" content="Rex J. Kapoloma">
   <title>ReportRadar - About</title>
-  <link rel="stylesheet" href="css/base.css">
-<link rel="stylesheet" href="css/larger.css" media="(min-width: 769px)">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/webp" href="images/favicon.webp">
 </head>
 <body>
   <header>
-    <div class="logo">
-      <img src="images/logo.png" alt="ReportRadar logo" loading="lazy">
-      <span class="tagline">Stay Ahead with Real-Time Reporting</span>
-    </div>
-     <div class="menu-toggle">
+    <div class="menu-toggle">
       <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">☰</button>
-      <button class="search-toggle" aria-label="Toggle search" aria-expanded="false">🔍</button>
     </div>
+    <div class="logo">
+      <span class="logo-box">ReportRadar</span>
+    </div>
+    <div class="weather">
+      <span class="weather-time">03:02 AM</span>
+      <span class="weather-temp">18°C</span>
+      <span class="weather-icon">🌙</span>
+    </div>
+    <button class="mode-toggle" aria-label="Toggle dark/light mode">🌙</button>
     <nav class="nav-menu" aria-label="Primary navigation">
       <a href="index.html">Home</a>
       <a href="world.html">World</a>
       <a href="tech.html">Tech</a>
       <a href="about.html" aria-current="page">About</a>
-      <a href="contact.html">Contact</a>
     </nav>
-    <div class="search-container">
-      <label for="search-bar" class="visually-hidden">Search articles</label>
-      <input type="search" id="search-bar" placeholder="Search articles..." aria-label="Search articles">
-    </div>
   </header>
   <main>
     <section id="about" aria-labelledby="about-heading">
-      <h1 id="about-heading">About ReportRadar</h1>
-      <p>ReportRadar is dedicated to delivering timely, accurate news to keep you informed. Our mission is to provide unbiased reporting on global and technological developments.</p>
-      <h2>Our Team</h2>
-      <ul>
-        <li>Jane Doe - Editor-in-Chief</li>
-        <li>John Smith - Tech Reporter</li>
-      </ul>
+      <h1 id="about-heading">About Us</h1>
+      <p>ReportRadar is a modern news platform launched in 2025, dedicated to delivering accurate and timely updates on World, Tech, and more. Our mission is to inform and engage readers with a seamless, accessible experience.</p>
     </section>
-    <section id="search-results" aria-live="polite"></section>
   </main>
   <footer>
     <p>© 2025 ReportRadar</p>
-    <a href="references.html">References</a>
+    <a href="https://github.com/yourusername/reportradar" target="_blank">GitHub</a>
   </footer>
   <script src="js/script.js"></script>
 </body>
