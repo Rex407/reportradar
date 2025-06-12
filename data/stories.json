@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "title": "Local Market Sees Big Growth",
+    "content": "The community market has reported a 20% increase in sales since the start of the year. Experts attribute this to increased support for local vendors.",
+    "date": "2025-06-10",
+    "image": "images/market.jpg"
+  },
+  {
+    "id": 2,
+    "title": "New Tech Hub Opens in Downtown",
+    "content": "A brand new technology center has opened downtown, providing resources and workspaces for over 50 startups.",
+    "date": "2025-06-11",
+    "image": "images/techhub.jpg"
+  },
+  {
+    "id": 3,
+    "title": "High School Robotics Team Wins National Award",
+    "content": "The local high school robotics team took first place at the national competition, impressing judges with their autonomous rover.",
+    "date": "2025-06-09",
+    "image": "images/robotics.jpg"
+  }
+]

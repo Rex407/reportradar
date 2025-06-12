@@ -1,22 +1,21 @@
 # reportradar
 
 # reportradar/
-├── index.html          # Homepage
-├── world.html         # World news category
-├── tech.html          # Tech news category
-├── about.html         # About page
-├── contact.html       # Contact page
-├── references.html    # References (unstyled)
+├── index.html          # Homepage to display news stories
+├── story.html          # Individual story view + comments
+├── admin.html          # Admin dashboard to add/delete stories
+├── login.html          # Login page
+├── register.html       # Register page
+├── references.html     # Citations page
 ├── css/
-│   └── styles.css     # Global styles
+│   └── style.css       # Basic responsive layout
 ├── js/
-│   └── script.js      # JavaScript functionality
-├── images/
-│   ├── logo.png       # Site logo
-│   ├── breaking-news.jpg  # Sample image
-│   └── tech-image.jpg      # Sample image
-└── README.md          # Project description
-
+│   ├── main.js         # Loads/displays stories
+│   ├── admin.js        # Handles story management
+│   └── auth.js         # Login/Register logic
+├── images/             # Placeholder images (e.g., placeholder.webp, favicon.webp)
+├── data/
+│   └── stories.json    # Initial story data
 # ReportRadar
 
 A responsive news website built for the W06 Project, using HTML, CSS, and JavaScript. Hosted on GitHub Pages.

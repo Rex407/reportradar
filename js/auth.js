@@ -1,29 +1,34 @@
-// Load admin state from localStorage
-const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
-const loginForm = document.getElementById('login-form');
-const loginMessage = document.getElementById('login-message');
+// Register
+const registerForm = document.getElementById('register-form');
+if (registerForm) {
+  registerForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const username = document.getElementById('new-username').value;
+    const password = document.getElementById('new-password').value;
+    const users = JSON.parse(localStorage.getItem('users')) || [];
 
-if (isAuthenticated && window.location.pathname.includes('login.html')) {
-  window.location.href = 'dashboard.html';
+    users.push({ username, password });
+    localStorage.setItem('users', JSON.stringify(users));
+    alert('Registered! You can now login.');
+    registerForm.reset();
+  });
 }
 
-loginForm?.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
+// Login
+const loginForm = document.getElementById('login-form');
+if (loginForm) {
+  loginForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const users = JSON.parse(localStorage.getItem('users')) || [];
 
-  // Simple authentication (replace with secure backend in production)
-  if (username === 'admin' && password === 'admin123') {
-    localStorage.setItem('isAuthenticated', 'true');
-    loginMessage.textContent = 'Login successful! Redirecting...';
-    setTimeout(() => window.location.href = 'dashboard.html', 1000);
-  } else {
-    loginMessage.textContent = 'Invalid username or password.';
-  }
-});
-
-// Logout functionality
-document.getElementById('logout')?.addEventListener('click', () => {
-  localStorage.removeItem('isAuthenticated');
-  window.location.href = '../admin/login.html';
-});
+    const found = users.find(user => user.username === username && user.password === password);
+    if (found) {
+      alert('Login successful!');
+      localStorage.setItem('loggedInUser', username);
+    } else {
+      alert('Invalid credentials.');
+    }
+  });
+}

@@ -3,48 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="ReportRadar Admin Login">
-  <meta name="author" content="Rex J. Kapoloma">
-  <title>ReportRadar - Admin Login</title>
+  <title>Admin Dashboard</title>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" type="image/webp" href="images/favicon.webp">
 </head>
 <body>
-  <header>
-    <div class="menu-toggle">
-      <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">☰</button>
-    </div>
-    <div class="logo">
-      <span class="logo-box">ReportRadar Admin</span>
-    </div>
-    <div class="weather">
-      <span class="weather-time">03:34 AM</span>
-      <span class="weather-temp">18°C</span>
-      <span class="weather-icon">🌙</span>
-    </div>
-    <button class="mode-toggle" aria-label="Toggle dark/light mode">🌙</button>
-    <nav class="nav-menu" aria-label="Primary navigation">
-      <a href="index.html">Home</a>
-      <a href="admin.html" aria-current="page">Login</a>
-    </nav>
-  </header>
   <main>
-    <section id="login" aria-labelledby="login-heading">
-      <h1 id="login-heading">Admin Login</h1>
-      <form id="login-form">
-        <label for="username">Username:</label>
-        <input type="text" id="username" required aria-required="true" placeholder="Enter username">
-        <label for="password">Password:</label>
-        <input type="password" id="password" required aria-required="true" placeholder="Enter password">
-        <button type="submit">Login</button>
-      </form>
-      <div id="login-message" aria-live="polite"></div>
-    </section>
+    <h1>Admin Dashboard</h1>
+    <form id="story-form">
+      <input type="text" id="title" placeholder="Title" required>
+      <textarea id="content" placeholder="Content" required></textarea>
+      <button type="submit">Add Story</button>
+    </form>
+    <section id="admin-story-list"></section>
   </main>
-  <footer>
-    <p>© 2025 ReportRadar</p>
-    <a href="https://github.com/yourusername/reportradar" target="_blank">GitHub</a>
-  </footer>
-  <script src="js/auth.js"></script>
+  <script src="js/admin.js"></script>
 </body>
 </html>
