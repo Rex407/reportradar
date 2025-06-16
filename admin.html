@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReportRadar - Admin</title>
+    <meta name="description" content="Admin page for managing news stories on ReportRadar.">
+    <meta name="author" content="xAI Team">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>NEWS</h1>
+        <nav aria-label="Main navigation">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="admin.html" aria-current="page">Admin Page</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Submit a Story</h2>
+        <div id="adminContainer" style="display: none;">
+            <form id="storyForm" novalidate>
+                <label for="adminName">Admin Name</label>
+                <input type="text" id="adminName" placeholder="Enter your name" required aria-required="true">
+                <label for="storyTitle">Story Title</label>
+                <input type="text" id="storyTitle" placeholder="Enter title" required aria-required="true">
+                <label for="storyImageFile">Upload Image</label>
+                <input type="file" id="storyImageFile" accept="image/*" aria-describedby="imageNote">
+                <label for="storyImageURL">Or Enter Image URL</label>
+                <input type="url" id="storyImageURL" placeholder="https://example.com/image.jpg">
+                <p id="imageNote" class="note">Provide either an image file or URL.</p>
+                <label for="storyContent">Story Content</label>
+                <textarea id="storyContent" placeholder="Write your story..." required aria-required="true"></textarea>
+                <label for="isLive">Mark as Live</label>
+                <input type="checkbox" id="isLive" name="isLive">
+                <button type="submit">Post Story</button>
+            </form>
+            <h2>Manage Stories</h2>
+            <div id="storyList"></div>
+        </div>
+    </main>
+    <footer>
+        <p>© 2025 ReportRadar. <a href="references.html">References</a></p>
+    </footer>
+    <script src="js/scripts.js"></script>
+    <script>
+        const password = prompt("Enter admin password:");
+        if (password === "radar@2025") {
+            document.getElementById('adminContainer').style.display = 'block';
+            localStorage.setItem('isAdmin', 'true');
+            displayAdminStories();
+        } else {
+            alert("Incorrect password.");
+            localStorage.setItem('isAdmin', 'false');
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>
