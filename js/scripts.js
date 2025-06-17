@@ -1,167 +1,29 @@
-// Initialize stories and update header on page load
-window.addEventListener('load', () => {
-    try {
-        let stories;
-        fetch('https://raw.githubusercontent.com/Rex407/reportradar/main/data/stories.json')
-            .then(response => {
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                return response.json();
-            })
-            .then(data => {
-                stories = data || [];
-                if (!Array.isArray(stories)) {
-                    console.warn('No valid stories found, resetting.');
-                    stories = [];
-                }
-                console.log('Loaded stories from GitHub:', stories);
-                stories.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-                displayStories(stories);
-                if (window.location.pathname.includes('admin.html')) {
-                    displayAdminStories();
-                }
-            }).catch(error => {
-                console.error('Error fetching stories from GitHub:', error);
-                // Fallback to localStorage with debug
-                stories = JSON.parse(localStorage.getItem('stories')) || [];
-                if (!stories || !Array.isArray(stories)) {
-                    console.warn('No valid stories in localStorage, resetting.');
-                    stories = [];
-                }
-                console.log('Fallback stories from localStorage:', stories);
-                displayStories(stories);
-                if (window.location.pathname.includes('admin.html')) {
-                    displayAdminStories();
-                }
-            });
-    } catch (error) {
-        console.error('Error initializing stories:', error);
-        displayErrorMessage();
+// Display stories on home page
+function displayStories(stories) {
+    const newsContainer = document.getElementById('newsContainer');
+    if (!newsContainer) {
+        console.error('newsContainer element not found.');
+        return; // Exit function if element is not found
     }
-});
 
-// Handle story form submission
-const storyForm = document.getElementById('storyForm');
-if (storyForm) {
-    storyForm.addEventListener('submit', event => {
-        event.preventDefault();
+    newsContainer.innerHTML = '';
+    const liveStory = stories.find(s => s.isLive);
+    const otherStories = stories.filter(s => !s.isLive);
 
-        const adminName = document.getElementById('adminName').value.trim();
-        const titleInput = document.getElementById('storyTitle');
-        const contentInput = document.getElementById('storyContent');
-        const imageURLInput = document.getElementById('storyImageURL');
-        const fileInput = document.getElementById('storyImageFile');
-        const isLive = document.getElementById('isLive').checked;
+    if (liveStory) {
+        newsContainer.appendChild(createStoryElement(liveStory));
+    } else if (stories.length > 0) {
+        newsContainer.appendChild(createStoryElement(stories[0]));
+    } else {
+        newsContainer.innerHTML = '<p>No stories yet. Check back later!</p>';
+        return;
+    }
 
-        const title = titleInput.value.trim();
-        const content = contentInput.value.trim();
-        const imageURL = imageURLInput.value.trim();
-
-        if (!title || !content || !adminName) {
-            alert('Title, content, and admin name are required.');
-            return;
-        }
-
-        if (fileInput.files.length > 0) {
-            const file = fileInput.files[0];
-            if (!file.type.startsWith('image/')) {
-                alert('Please upload a valid image.');
-                return;
-            }
-            const reader = new FileReader();
-            reader.onload = () => saveStory(title, content, reader.result, isLive, adminName);
-            reader.onerror = () => alert('Error reading image.');
-            reader.readAsDataURL(file);
-        } else if (imageURL) {
-            const img = new Image();
-            img.onload = () => saveStory(title, content, imageURL, isLive, adminName);
-            img.onerror = () => alert('Invalid image URL.');
-            img.src = imageURL;
-        } else {
-            alert('Provide an image file or URL.');
-            return;
-        }
-    });
-}
-
-// Save story to GitHub
-function saveStory(title, content, image, isLive, adminName) {
-    try {
-        // Fetch current stories from GitHub
-        let stories = [];
-        fetch('https://raw.githubusercontent.com/Rex407/reportradar/main/data/stories.json')
-            .then(response => {
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                return response.json();
-            })
-            .then(data => {
-                stories = data || [];
-                if (!Array.isArray(stories)) stories = [];
-            }).catch(error => {
-                console.warn('Failed to fetch stories, using empty array:', error);
-            });
-
-        const story = {
-            id: Date.now(),
-            title,
-            content,
-            image,
-            timestamp: new Date().toISOString(),
-            comments: [],
-            isLive,
-            adminName
-        };
-        stories.push(story);
-
-        // Save to localStorage as a temporary cache
-        localStorage.setItem('stories', JSON.stringify(stories));
-        console.log('Story saved locally:', story);
-        alert('Story posted successfully!');
-
-        // Push to GitHub (requires PAT)
-        const token = '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'; // Your PAT
-        const repo = 'Rex407/reportradar'; // Corrected to owner/repo format
-        const path = 'data/stories.json';
-        fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
-            method: 'GET',
-            headers: { Authorization: `token ${token}` }
-        }).then(response => {
-            if (!response.ok) throw new Error(`GET failed: ${response.status}`);
-            return response.json();
-        }).then(data => {
-            fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
-                method: 'PUT',
-                headers: {
-                    Authorization: `token ${token}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    message: `Add story ${story.id}`,
-                    content: btoa(JSON.stringify(stories, null, 2)), // Base64 encode
-                    sha: data.sha // Use the current SHA from GET
-                })
-            }).then(response => {
-                if (!response.ok) throw new Error(`PUT failed: ${response.status}`);
-                return response.json();
-            }).then(() => {
-                console.log('Story pushed to GitHub:', story);
-            }).catch(error => console.error('GitHub push failed:', error));
-        }).catch(error => console.error('Failed to get SHA:', error));
-
-        if (typeof storyForm !== 'undefined' && storyForm) {
-            storyForm.reset();
-        }
-        if (window.location.pathname.includes('admin.html')) {
-            displayAdminStories();
-        } else {
-            displayStories(stories);
-        }
-    } catch (error) {
-        console.error('Error saving story:', error);
-        alert('Failed to save story. Check console for details.');
-        if (error.name === 'QuotaExceededError') {
-            console.warn('Local Storage quota exceeded, resetting.');
-            localStorage.clear();
-        }
+    const relatedStories = document.createElement('div');
+    relatedStories.classList.add('related-stories');
+    otherStories.forEach(story => relatedStories.appendChild(createStoryElement(story)));
+    if (otherStories.length > 0) {
+        newsContainer.appendChild(relatedStories);
     }
 }
 
@@ -365,5 +227,172 @@ function displayErrorMessage() {
     const newsContainer = document.getElementById('newsContainer');
     if (newsContainer) {
         newsContainer.innerHTML = '<p>Error loading stories. Please try again later or clear Local Storage.</p>';
+    }
+}
+
+// Initialize stories and update header on page load
+window.addEventListener('load', () => {
+    try {
+        let stories;
+        fetch('https://raw.githubusercontent.com/Rex407/reportradar/main/data/stories.json')
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                return response.json();
+            })
+            .then(data => {
+                stories = data || [];
+                if (!Array.isArray(stories)) {
+                    console.warn('No valid stories found, resetting.');
+                    stories = [];
+                }
+                console.log('Loaded stories from GitHub:', stories);
+                stories.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                displayStories(stories);
+                if (window.location.pathname.includes('admin.html')) {
+                    displayAdminStories();
+                }
+            }).catch(error => {
+                console.error('Error fetching stories from GitHub:', error);
+                // Fallback to localStorage with debug
+                stories = JSON.parse(localStorage.getItem('stories')) || [];
+                if (!stories || !Array.isArray(stories)) {
+                    console.warn('No valid stories in localStorage, resetting.');
+                    stories = [];
+                }
+                console.log('Fallback stories from localStorage:', stories);
+                displayStories(stories);
+                if (window.location.pathname.includes('admin.html')) {
+                    displayAdminStories();
+                }
+            });
+    } catch (error) {
+        console.error('Error initializing stories:', error);
+        displayErrorMessage();
+    }
+});
+
+// Handle story form submission
+const storyForm = document.getElementById('storyForm');
+if (storyForm) {
+    storyForm.addEventListener('submit', event => {
+        event.preventDefault();
+
+        const adminName = document.getElementById('adminName').value.trim();
+        const titleInput = document.getElementById('storyTitle');
+        const contentInput = document.getElementById('storyContent');
+        const imageURLInput = document.getElementById('storyImageURL');
+        const fileInput = document.getElementById('storyImageFile');
+        const isLive = document.getElementById('isLive').checked;
+
+        const title = titleInput.value.trim();
+        const content = contentInput.value.trim();
+        const imageURL = imageURLInput.value.trim();
+
+        if (!title || !content || !adminName) {
+            alert('Title, content, and admin name are required.');
+            return;
+        }
+
+        if (fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+            if (!file.type.startsWith('image/')) {
+                alert('Please upload a valid image.');
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = () => saveStory(title, content, reader.result, isLive, adminName);
+            reader.onerror = () => alert('Error reading image.');
+            reader.readAsDataURL(file);
+        } else if (imageURL) {
+            const img = new Image();
+            img.onload = () => saveStory(title, content, imageURL, isLive, adminName);
+            img.onerror = () => alert('Invalid image URL.');
+            img.src = imageURL;
+        } else {
+            alert('Provide an image file or URL.');
+            return;
+        }
+    });
+}
+
+// Save story to GitHub
+function saveStory(title, content, image, isLive, adminName) {
+    try {
+        // Fetch current stories from GitHub
+        let stories = [];
+        fetch('https://raw.githubusercontent.com/Rex407/reportradar/main/data/stories.json')
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                return response.json();
+            })
+            .then(data => {
+                stories = data || [];
+                if (!Array.isArray(stories)) stories = [];
+            }).catch(error => {
+                console.warn('Failed to fetch stories, using empty array:', error);
+            });
+
+        const story = {
+            id: Date.now(),
+            title,
+            content,
+            image,
+            timestamp: new Date().toISOString(),
+            comments: [],
+            isLive,
+            adminName
+        };
+        stories.push(story);
+
+        // Save to localStorage as a temporary cache
+        localStorage.setItem('stories', JSON.stringify(stories));
+        console.log('Story saved locally:', story);
+        alert('Story posted successfully!');
+
+        // Push to GitHub (requires PAT)
+        const token = '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'; // Your PAT
+        const repo = 'Rex407/reportradar'; // Corrected to owner/repo format
+        const path = 'data/stories.json';
+        fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+            method: 'GET',
+            headers: { Authorization: `token ${token}` }
+        }).then(response => {
+            if (!response.ok) throw new Error(`GET failed: ${response.status}`);
+            return response.json();
+        }).then(data => {
+            fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+                method: 'PUT',
+                headers: {
+                    Authorization: `token ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: `Add story ${story.id}`,
+                    content: btoa(JSON.stringify(stories, null, 2)), // Base64 encode
+                    sha: data.sha // Use the current SHA from GET
+                })
+            }).then(response => {
+                if (!response.ok) throw new Error(`PUT failed: ${response.status}`);
+                return response.json();
+            }).then(() => {
+                console.log('Story pushed to GitHub:', story);
+            }).catch(error => console.error('GitHub push failed:', error));
+        }).catch(error => console.error('Failed to get SHA:', error));
+
+        if (typeof storyForm !== 'undefined' && storyForm) {
+            storyForm.reset();
+        }
+        if (window.location.pathname.includes('admin.html')) {
+            displayAdminStories();
+        } else {
+            displayStories(stories);
+        }
+    } catch (error) {
+        console.error('Error saving story:', error);
+        alert('Failed to save story. Check console for details.');
+        if (error.name === 'QuotaExceededError') {
+            console.warn('Local Storage quota exceeded, resetting.');
+            localStorage.clear();
+        }
     }
 }
