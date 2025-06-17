@@ -84,7 +84,7 @@ function saveStory(title, content, image, isLive, adminName) {
     try {
         // Fetch current stories from GitHub
         let stories = [];
-        fetch('https://raw.githubusercontent.com/your-username/reportradar-w06/main/data/stories.json')
+        fetch('https://raw.githubusercontent.com/Rex407/reportradar-w06/main/data/stories.json')
             .then(response => response.json())
             .then(data => {
                 stories = data || [];
@@ -111,7 +111,7 @@ function saveStory(title, content, image, isLive, adminName) {
         alert('Story posted successfully!');
 
         // Push to GitHub (requires PAT)
-        const token = 'YOUR_GITHUB_PAT'; // Replace with your PAT
+        const token = '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'; // Replace with your PAT
         const repo = 'https://github.com/Rex407/reportradar.git'; // Replace with your repo
         const path = 'data/stories.json';
         fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
