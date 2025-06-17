@@ -111,7 +111,7 @@ function saveStory(title, content, image, isLive, adminName) {
         alert('Story posted successfully!');
 
         // Push to GitHub (requires PAT)
-        const token = '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'; // Replace with your PAT
+        const token = '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'; // Replace with your PAT
         const repo = 'https://github.com/Rex407/reportradar.git'; // Replace with your repo
         const path = 'data/stories.json';
         fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
