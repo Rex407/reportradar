@@ -3,7 +3,16 @@ function displayStories(stories) {
     const newsContainer = document.getElementById('newsContainer');
     if (!newsContainer) {
         console.error('newsContainer element not found.');
-        return; // Exit function if element is not found
+        // Retry after a short delay
+        setTimeout(() => {
+            const retryContainer = document.getElementById('newsContainer');
+            if (retryContainer) {
+                displayStories(stories); // Retry display
+            } else {
+                console.warn('newsContainer still not found after retry.');
+            }
+        }, 100); // 100ms delay
+        return; // Exit if element is not found initially
     }
 
     newsContainer.innerHTML = '';
