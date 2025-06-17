@@ -10,6 +10,12 @@ function displayStories(stories) {
                 displayStories(stories); // Retry display
             } else {
                 console.warn('newsContainer still not found after retry.');
+                // Fallback: Create a temporary container
+                const tempContainer = document.createElement('main');
+                tempContainer.id = 'newsContainer';
+                document.body.appendChild(tempContainer);
+                console.warn('Temporary newsContainer created.');
+                displayStories(stories); // Recurse with temp container
             }
         }, 100); // 100ms delay
         return; // Exit if element is not found initially
