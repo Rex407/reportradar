@@ -12,9 +12,9 @@ body {
     background: #f4f4f4;
 }
 
-/* Header */
+/* Header - Contrast with red, Alignment centered */
 header {
-    background: #A52A2A; /* Red similar to screenshot */
+    background: #A52A2A; /* Red for contrast */
     color: white;
     padding: 1rem;
     text-align: center;
@@ -42,7 +42,7 @@ nav a {
 }
 
 nav a:hover, nav a:focus {
-    background: #8B0000; /* Darker red */
+    background: #8B0000; /* Darker red for contrast */
     border-radius: 3px;
 }
 
@@ -50,7 +50,7 @@ nav a[aria-current="page"] {
     text-decoration: underline;
 }
 
-/* Main */
+/* Main - Proximity of story elements, Alignment consistent */
 main {
     max-width: 1200px;
     margin: 0 auto;
@@ -79,7 +79,7 @@ main {
 .main-story-text h2 {
     font-size: 1.8rem;
     margin-bottom: 0.5rem;
-    color: #A52A2A;
+    color: #A52A2A; /* Contrast with text */
 }
 
 .main-story-text .meta {
@@ -89,7 +89,7 @@ main {
 }
 
 .live-badge {
-    background: #FF4500; /* Orange for LIVE */
+    background: #FF4500; /* Orange for contrast */
     color: white;
     padding: 0.2rem 0.5rem;
     font-size: 0.9rem;
@@ -171,7 +171,7 @@ main {
     border-radius: 3px;
 }
 
-/* Admin Story List */
+/* Admin Story List - Proximity of elements */
 #storyList {
     margin-top: 1rem;
 }
@@ -205,7 +205,7 @@ main {
     display: inline-block;
 }
 
-/* Form */
+/* Form - Alignment and Repetition */
 form {
     display: grid;
     gap: 0.5rem;
@@ -234,7 +234,7 @@ textarea {
 
 button, .share-btn, .delete-btn {
     padding: 0.5rem 1rem;
-    background: #2E7D32; /* Dark green for buttons */
+    background: #2E7D32; /* Green for repetition */
     color: white;
     border: none;
     border-radius: 3px;
@@ -244,11 +244,11 @@ button, .share-btn, .delete-btn {
 }
 
 button:hover, button:focus, .share-btn:hover, .share-btn:focus, .delete-btn:hover, .delete-btn:focus {
-    background: #1B5E20; /* Darker green */
+    background: #1B5E20; /* Darker green for contrast */
 }
 
 .share-btn, .delete-btn {
-    display: none; /* Hidden on home page */
+    display: inline-block; /* Ensure visibility */
 }
 
 .story-actions {
@@ -294,11 +294,11 @@ button:hover, button:focus, .share-btn:hover, .share-btn:focus, .delete-btn:hove
     color: #ddd;
 }
 
-/* Footer */
+/* Footer - Alignment and Repetition */
 footer {
     text-align: center;
     padding: 1rem;
-    background: #6F4E37; /* Coffee brown */
+    background: #6F4E37; /* Brown for contrast */
     color: #f4f4f4;
     margin-top: 2rem;
 }
@@ -312,31 +312,71 @@ footer a:hover, footer a:focus {
     text-decoration: underline;
 }
 
-/* Responsive design */
+/* Responsive Design - PARC Applied */
+/* Mobile Portrait (≤ 600px) */
 @media (max-width: 600px) {
     header h1 {
-        font-size: 2rem;
+        font-size: 1.8rem; /* Proximity with nav */
     }
-
     nav ul {
         flex-direction: column;
-        gap: 0.5rem;
+        align-items: center; /* Alignment */
+        gap: 0.3rem;
     }
-
     .main-story {
-        flex-direction: column;
+        flex-direction: column; /* Proximity of text and image */
     }
-
     .main-story-img {
         max-height: 200px;
     }
-
-    .related-stories {
-        grid-template-columns: 1fr;
+    .main-story-text h2 {
+        font-size: 1.5rem;
     }
-
+    .related-stories {
+        grid-template-columns: 1fr; /* Single column for proximity */
+    }
     .admin-story img {
         height: 80px;
+    }
+    form {
+        max-width: 100%; /* Full width for alignment */
+    }
+    .story-actions {
+        flex-direction: column; /* Stack buttons for proximity */
+        gap: 0.3rem;
+    }
+}
+
+/* Mobile Landscape (≤ 900px) */
+@media (max-width: 900px) and (orientation: landscape) {
+    .main-story {
+        flex-direction: column;
+    }
+    .main-story-img {
+        max-height: 250px;
+    }
+    .related-stories {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjusted proximity */
+    }
+    nav ul {
+        flex-wrap: wrap; /* Repetition of layout */
+        justify-content: center;
+    }
+}
+
+/* Larger Screens (≥ 1200px) */
+@media (min-width: 1200px) {
+    .main-story-img {
+        max-height: 400px; /* Enhanced contrast with larger view */
+    }
+    .related-stories {
+        grid-template-columns: repeat(3, 1fr); /* Repetition of columns */
+    }
+    .main-story-text h2 {
+        font-size: 2rem; /* Contrast with larger text */
+    }
+    form {
+        max-width: 800px; /* Alignment with larger layout */
     }
 }
 
