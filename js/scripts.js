@@ -2,24 +2,33 @@
 window.addEventListener('load', () => {
     try {
         let stories;
-        try {
-            stories = JSON.parse(localStorage.getItem('stories'));
-        } catch (parseError) {
-            console.warn('Failed to parse stories data, resetting:', parseError);
-            stories = [];
-            localStorage.setItem('stories', JSON.stringify(stories));
-        }
-        if (!stories || !Array.isArray(stories)) {
-            console.warn('No valid stories found in Local Storage, resetting.');
-            stories = [];
-            localStorage.setItem('stories', JSON.stringify(stories));
-        }
-        console.log('Loaded stories:', stories);
-        stories.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-        displayStories(stories);
-        if (window.location.pathname.includes('admin.html')) {
-            displayAdminStories();
-        }
+        fetch('https://raw.githubusercontent.com/Rex407/reportradar/main/data/stories.json')
+            .then(response => response.json())
+            .then(data => {
+                stories = data || [];
+                if (!Array.isArray(stories)) {
+                    console.warn('No valid stories found, resetting.');
+                    stories = [];
+                }
+                console.log('Loaded stories from GitHub:', stories);
+                stories.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                displayStories(stories);
+                if (window.location.pathname.includes('admin.html')) {
+                    displayAdminStories();
+                }
+            }).catch(error => {
+                console.error('Error fetching stories from GitHub:', error);
+                // Fallback to localStorage
+                stories = JSON.parse(localStorage.getItem('stories')) || [];
+                if (!stories || !Array.isArray(stories)) {
+                    console.warn('No valid stories in localStorage, resetting.');
+                    stories = [];
+                }
+                displayStories(stories);
+                if (window.location.pathname.includes('admin.html')) {
+                    displayAdminStories();
+                }
+            });
     } catch (error) {
         console.error('Error initializing stories:', error);
         displayErrorMessage();
@@ -70,17 +79,20 @@ if (storyForm) {
     });
 }
 
-// Save story to Local Storage
+// Save story to GitHub
 function saveStory(title, content, image, isLive, adminName) {
     try {
-        let stories;
-        try {
-            stories = JSON.parse(localStorage.getItem('stories')) || [];
-        } catch (parseError) {
-            console.warn('Failed to parse stories data, resetting:', parseError);
-            stories = [];
-            localStorage.setItem('stories', JSON.stringify(stories));
-        }
+        // Fetch current stories from GitHub
+        let stories = [];
+        fetch('https://raw.githubusercontent.com/your-username/reportradar-w06/main/data/stories.json')
+            .then(response => response.json())
+            .then(data => {
+                stories = data || [];
+                if (!Array.isArray(stories)) stories = [];
+            }).catch(() => {
+                console.warn('Failed to fetch stories, using empty array.');
+            });
+
         const story = {
             id: Date.now(),
             title,
@@ -92,9 +104,36 @@ function saveStory(title, content, image, isLive, adminName) {
             adminName
         };
         stories.push(story);
+
+        // Save to localStorage as a temporary cache
         localStorage.setItem('stories', JSON.stringify(stories));
-        console.log('Story saved:', story);
+        console.log('Story saved locally:', story);
         alert('Story posted successfully!');
+
+        // Push to GitHub (requires PAT)
+        const token = 'YOUR_GITHUB_PAT'; // Replace with your PAT
+        const repo = 'https://github.com/Rex407/reportradar.git'; // Replace with your repo
+        const path = 'data/stories.json';
+        fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+            method: 'GET',
+            headers: { Authorization: `token ${token}` }
+        }).then(response => response.json()).then(data => {
+            fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+                method: 'PUT',
+                headers: {
+                    Authorization: `token ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: `Add story ${story.id}`,
+                    content: btoa(JSON.stringify(stories, null, 2)), // Base64 encode
+                    sha: data.sha // Use the current SHA from GET
+                })
+            }).then(response => response.json()).then(() => {
+                console.log('Story pushed to GitHub:', story);
+            }).catch(error => console.error('GitHub push failed:', error));
+        }).catch(error => console.error('Failed to get SHA:', error));
+
         if (typeof storyForm !== 'undefined' && storyForm) {
             storyForm.reset();
         }
